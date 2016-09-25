@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block head_css_page %}
+<link rel="stylesheet" type="text/css" href="/static/css/slide.css" />
+<!--[if IE 6]><link rel="stylesheet" type="text/css" href="/static/css/ie/ie6slide.css" /><![endif]-->
+<!--[if IE 7]><link rel="stylesheet" type="text/css" href="/static/css/ie/ie7slide.css" /><![endif]-->
+<!--[if IE 8]><link rel="stylesheet" type="text/css" href="/static/css/ie/ie8slide.css" /><![endif]-->
+{% endblock head_css_page %}
+
+
+{% block body_slide %}
+<div id = "slidepane"></div>
+{% endblock body_slide %}
+
+{% block footer_javascript_page %}
+{% if Slide.SlideType == 2 %}
+<script type="text/javascript" src="/static/js/openseadragon.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    var viewer;
+    var viewer_is_new;
+
+    function open_slide(link) {
+        // Load info objects
+        var image;
+        image=link;
+        // Create viewer if necessary
+        if (!viewer) {
+            viewer = new OpenSeadragon({
+                id: "slidepane",
+                prefixUrl: "/static/images/",
+                showNavigator: true,
+                animationTime: 0.5,
+                blendTime: 0.1,
+                constrainDuringPan: true,
+                maxZoomPixelRatio: 2,
+                minPixelRatio: 0.5,
+                minZoomLevel: 1,
+                visibilityRatio: 1,
+                zoomPerScroll: 2
+            });
+            viewer.addHandler("open", function() {
+                viewer.source.minLevel = 8;
+                /* Start zoomed in, then return to home position after
+                   loading.  Workaround for blurry viewport on initial
+                   load (OpenSeadragon #95). */
+                var center = new OpenSeadragon.Point(0.5,
+                        1 / (2 * viewer.source.aspectRatio));
+                viewer.viewport.zoomTo(2, center, true);
+                viewer_is_new = true;
+                /* Ensure we receive update-viewport events, OpenSeadragon
+                   #94 */
+                viewer.drawer.viewer = viewer;
+            });
+            viewer.addHandler("update-viewport", function() {
+                if (viewer_is_new) {
+                    setTimeout(function() {
+                        if (viewer.viewport) {
+                            viewer.viewport.goHome(false);
+                        }
+                    }, 1);
+                    viewer_is_new = false;
+                }
+            });
+        }
+
+        // Load slide
+        viewer.open(image);
+
+    }
+
+    open_slide("/histoslide/{{ Slide.pk }}.dzi");
+
+    // CSS doesn't provide a good way to specify a div of height
+    // (100% - height(header))
+    $(window).resize(function() {
+        $('#content').height($(window).height() -
+                    $('#header').outerHeight() - 20);
+    }).resize();
+
+});
+
+</script>    
+{% endif %}  
+{% endblock footer_javascript_page %}
