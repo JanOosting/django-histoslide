@@ -55,14 +55,14 @@ def load_slide(slide_id, slidefile):
 def get_slide(slide_id):
     if slide_id not in Openslides._slides:
         s = Slide.objects.get(pk=slide_id)
-        load_slide(s.pk, path.join(settings.PROJECT_ROOT, s.UrlPath))
+        load_slide(s.pk, path.join(settings.HISTOSLIDE_SLIDEROOT, s.UrlPath))
     return Openslides.getslide(slide_id)
     
 
 def get_deepzoom(slide_id):
     if slide_id not in Openslides._slides:
         s = Slide.objects.get(pk=slide_id)
-        load_slide(s.pk, path.join(settings.PROJECT_ROOT, s.UrlPath))
+        load_slide(s.pk, path.join(settings.HISTOSLIDE_SLIDEROOT, s.UrlPath))
     return Openslides.getdeepzoom(slide_id)
 
 
