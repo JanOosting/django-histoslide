@@ -1,4 +1,4 @@
-from cStringIO import StringIO
+from io import BytesIO
 from threading import Lock 
 from os import path
 from json import dumps
@@ -104,7 +104,7 @@ def dztile(request, slug, level, col, row, slideformat):
     except ValueError:
         # Invalid level or coordinates
         raise Http404
-    buf = StringIO()
+    buf = BytesIO()
     tile.save(buf, slideformat, quality=75)
     resp = HttpResponse(buf.getvalue(), content_type='image/%s' % slideformat)
     return resp
