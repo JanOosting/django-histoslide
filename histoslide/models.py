@@ -15,5 +15,5 @@ class Slide(models.Model):
     class Meta:
         ordering = ['Name']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.Name
