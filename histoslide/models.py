@@ -1,3 +1,5 @@
+from os.path import dirname
+
 from django.db import models
 
 
@@ -13,7 +15,7 @@ class Slide(models.Model):
     UrlPath = models.CharField(max_length=200)
 
     class Meta:
-        ordering = ['Name']
+        ordering = ['UrlPath']
 
     def __str__(self):
-        return self.Name
+        return u'%s - %s' % (dirname(self.UrlPath), self.Name)

@@ -13,10 +13,10 @@ class SlideAdmin(admin.ModelAdmin):
     def add_new_slides(self, request, queryset):
         # Collect all new slide files in the media dir
         currentuser = request.user.username
-        for root, dirs, files in walk(path.join(settings.PROJECT_ROOT, "slideobserver/media")):
+        for root, dirs, files in walk(path.join(settings.HISTOSLIDE_SLIDEROOT)):
             for slide_file in files:
                 if slide_file.lower().endswith(settings.SLIDEFILE_EXTENSIONS):
-                    urlnew = path.join(path.relpath(root, settings.PROJECT_ROOT), slide_file)
+                    urlnew = path.join(path.relpath(root, settings.HISTOSLIDE_SLIDEROOT), slide_file)
                     # only include slides that are not in the slide list yet
                     try:
                         slide = Slide.objects.get(UrlPath=urlnew)

@@ -16,14 +16,19 @@ Quick start
         ...
         'histoslide',
     ]
+3. Configure histoslide in settings.py
+
+SLIDEFILE_EXTENSIONS = ('.jpg', '.jpeg', '.mrxs', '.tif', '.tiff')
+HISTOSLIDE_SLIDEROOT = <absolute path to root of slide files>
+
 	
-3. Include the histoslide URLconf in your project urls.py like this::
+4. Include the histoslide URLconf in your project urls.py like this::
 
     url(r'^histoslide/', include('histoslide.urls')),
 	
-4. Run `python manage.py migrate` to create the histoslide models.
+5. Run `python manage.py migrate` to create the histoslide models.
 
-5. Start the development server and visit http://127.0.0.1:8000/admin/
+6. Start the development server and visit http://127.0.0.1:8000/admin/
    to register one or more slides (you'll need the Admin app enabled).
 
-5. Visit http://127.0.0.1:8000/histoslide/slide/1/ to view the first slide.
+7. Visit http://127.0.0.1:8000/histoslide/slide/1/ to view the first slide.
