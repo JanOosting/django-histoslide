@@ -7,6 +7,13 @@ var bm_zoom;
 var bm_image;
 var bm_goto;
 var slidevendor;
+var annotations;
+
+function get_slideid(slidelink) {
+    var filename = slidelink.split('/').pop();
+    filename = filename.replace(".dzi","");
+    return filename
+}
 
 function open_slide(link) {
     // Enable waiting for function to finish
@@ -66,7 +73,7 @@ function open_slide(link) {
             type: OpenSeadragon.ScalebarType.MICROSCOPY,
             pixelsPerMeter: 1000000,
             minWidth: "160px",
-            location: OpenSeadragon.ScalebarLocation.BOTTOM_LEFT,
+            location: OpenSeadragon.ScalebarLocation.BOTTOM_RIGHT,
             xOffset: 5,
             yOffset: 10,
             stayInsideImage: true,
@@ -79,10 +86,10 @@ function open_slide(link) {
     }
 
     // Load slide
-    if (image!=viewer_image) {
+    if (image!==viewer_image) {
         $.getJSON(image + ".json", {}, function(slideprop) {
             slidevendor = slideprop.vendor;
-            if (slideprop.mmpx == 0.0) {
+            if (slideprop.mmpx === 0.0) {
                 viewer.scalebar({
                     pixelsPerMeter:0.0
                 });
