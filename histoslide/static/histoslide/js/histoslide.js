@@ -89,7 +89,7 @@ function open_slide(link) {
     if (image!==viewer_image) {
         $.getJSON(image + ".json", {}, function(slideprop) {
             slidevendor = slideprop.vendor;
-            if (!slideprop.mmpx || slideprop.mmpx === 0.0) {
+            if (!slideprop.mppx || slideprop.mppx === 0.0) {
                 viewer.scalebar({
                     pixelsPerMeter:0.0
                 });
