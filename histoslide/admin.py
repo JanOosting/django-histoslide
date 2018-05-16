@@ -13,7 +13,7 @@ class SlideAdmin(admin.ModelAdmin):
     def add_new_slides(self, request, queryset):
         # Collect all new slide files in the media dir
         currentuser = request.user.username
-        for root, dirs, files in walk(path.join(settings.HISTOSLIDE_SLIDEROOT)):
+        for root, dirs, files in walk(path.join(settings.HISTOSLIDE_SLIDEROOT), followlinks=True):
             for slide_file in files:
                 if slide_file.lower().endswith(settings.SLIDEFILE_EXTENSIONS):
                     urlnew = path.join(path.relpath(root, settings.HISTOSLIDE_SLIDEROOT), slide_file)
