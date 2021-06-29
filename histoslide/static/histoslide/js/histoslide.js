@@ -64,6 +64,8 @@ function open_slide(link) {
                 setTimeout(function() {
                     if (viewer.viewport) {
                         viewer.viewport.zoomTo(bm_zoom,bm_center, false);
+                        // zoomTo is consistently off at higher zoom levels, extra panTo corrects this
+                        viewer.viewport.panTo(bm_center, true);
                     }
                 }, 200);
                 bm_goto = false;
